@@ -61,8 +61,13 @@ app.delete("/expenses/:id", async (req, res) => {
 
 // ─── VENDORS ───
 app.get("/vendors", async (req, res) => {
-  const data = await Vendor.find();
-  res.json(data);
+  try {
+    const data = await Vendor.find();
+    res.json(data);
+  } catch (err) {
+    console.log("ERROR:", err); // 👈 add this
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.post("/vendors", async (req, res) => {
